@@ -22,7 +22,7 @@
 		}
 
 		.mapboxgl-popup-content h3 {
-			background: #ccc;
+			background: #bbb;
 			color: #fff;
 			margin: 10;
 			display: inline;
@@ -41,15 +41,6 @@
 			font-size: 14px;
 		}
 
-		.mapboxgl-popup-content p {
-			margin: 0;
-			display: block;
-			padding: 0px;
-			font-weight: 400;
-			margin-top: 0px;
-			font-size: 11px;
-		}
-
 		.mapboxgl-popup-content h5 {
 			margin: 0;
 			display: block;
@@ -59,6 +50,18 @@
 			font-size: 12px;
 		}
 
+		.mapboxgl-popup-content p {
+			margin: 0;
+			display: block;
+			padding: 0px;
+			font-weight: 400;
+			margin-top: 0px;
+			font-size: 11px;
+		}
+
+		.mapboxgl-popup-content hr {
+			border-style: none;
+		}
 
 		.mapboxgl-popup-content-wrapper {
 			padding: 10%;
@@ -75,7 +78,7 @@
 			container: 'map',
 			style: 'mapbox://styles/ninlin/ckl5cvgrr482x17rmyzky494g',
 			center: [44.67, 43.025],
-			zoom: 12
+			zoom: 13
 		});
 
 
@@ -109,7 +112,7 @@
 						/* other */
 						'#ccc'
 					],
-					'line-width': 2.5
+					'line-width': 3
 				}
 			});
 			map.addLayer({
@@ -152,19 +155,29 @@
 
 				// Populate the popup and set its coordinates
 				// based on the feature found.
-				if (full_name != "null") {
-					popup
-						.setLngLat(e.lngLat)
-						.setHTML("<h3>" + name + "</h3>" +
-							"<h4>" + full_name + '</h4>' +
-							'<h5>' + birth + '-' + death + '</h5>' +
-							'<p>' + occupation + '</p>')
-						.addTo(map);
-				} else {
+				if (full_name == "null") {
 					popup
 						.setLngLat(e.lngLat)
 						.setHTML("<h3>" + name + "</h3>")
 						.addTo(map);
+				} else if (birth == "null") {
+					popup
+						.setLngLat(e.lngLat)
+						.setHTML("<h3>" + name + "</h3>"+
+						"<hr>" +
+						"<h4>" + full_name + '</h4>' +
+					'<p>' + occupation + '</p>')
+						.addTo(map);
+				} else {
+					popup
+						.setLngLat(e.lngLat)
+						.setHTML("<h3>" + name + "</h3>" +
+						"<hr>" +
+							"<h4>" + full_name + '</h4>' +
+							'<h5>' + birth + '-' + death + '</h5>' +
+							'<p>' + occupation + '</p>')
+						.addTo(map);
+
 				};
 
 
