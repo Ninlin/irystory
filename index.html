@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Irystory</title>
+	<title>Vladikavkaz Street Names</title>
 	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 	<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
 	<link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet" />
@@ -31,6 +31,7 @@
 			margin-top: 0px;
 			font-size: 14px;
 		}
+
 		.mapboxgl-popup-content h4 {
 			margin: 0;
 			display: block;
@@ -49,16 +50,19 @@
 			font-size: 11px;
 		}
 
-		.mapboxgl-popup-content hr {
-			border-style: none;
-		  border-width: 2px;
+		.mapboxgl-popup-content h5 {
+			margin: 0;
+			display: block;
+			padding: 0px;
+			font-weight: 500;
+			margin-top: 0px;
+			font-size: 12px;
 		}
+
 
 		.mapboxgl-popup-content-wrapper {
-  	padding: 10%;
+			padding: 10%;
 		}
-
-
 	</style>
 
 </head>
@@ -117,8 +121,8 @@
 					'line-cap': 'round'
 				},
 				'paint': {
-					'line-gap-width': 10,
-					'line-width': 2,
+					'line-gap-width': 20,
+					'line-width': 3,
 					'line-color': 'white',
 					'line-opacity': 0
 				}
@@ -148,21 +152,22 @@
 
 				// Populate the popup and set its coordinates
 				// based on the feature found.
-				popup
-					.setLngLat(e.lngLat)
-					.setHTML("<h3>" + name + "</h3>" +
-						'<hr>' +
-						"<h4>" + full_name + '</h4>' +
-						'<h4>' + birth + '-' + death + '</h4>' +
-						'<p>'+occupation+'</p>')
+				if (full_name != "null") {
+					popup
+						.setLngLat(e.lngLat)
+						.setHTML("<h3>" + name + "</h3>" +
+							"<h4>" + full_name + '</h4>' +
+							'<h5>' + birth + '-' + death + '</h5>' +
+							'<p>' + occupation + '</p>')
+						.addTo(map);
+				} else {
+					popup
+						.setLngLat(e.lngLat)
+						.setHTML("<h3>" + name + "</h3>")
+						.addTo(map);
+				};
 
-					.addTo(map);
 
-					if (full_name != null) {
-						document.getElementById('image-description').style.display = 'block';
-					} else {
-						document.getElementById('image-description').style.display = 'none';
-					};
 			});
 			map.on('mouseleave', 'outline', function() {
 				map.getCanvas().style.cursor = '';
