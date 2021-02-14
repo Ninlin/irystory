@@ -138,7 +138,7 @@
 				closeOnClick: false
 			});
 
-			map.on('mouseenter', 'route', function(e) {
+			map.on('mouseenter', 'outline', function(e) {
 				map.getCanvas().style.cursor = 'pointer';
 
 				var coordinates = e.features[0].geometry.coordinates.slice();
