@@ -66,6 +66,43 @@
 		.mapboxgl-popup-content-wrapper {
 			padding: 10%;
 		}
+
+		@keyframes fadein {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		.mapboxgl-popup {
+			animation: fadein 0.2s;
+		}
+
+		.mapboxgl-popup-content {
+			max-width: 300px;
+			min-width: 50px;
+			border-radius: 12px;
+			padding: 13px 19px;
+			box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+			min-width: 300px;
+		}
+
+		.mapboxgl-popup-close-button {
+			font-size: 16px;
+			font-family: Tahoma, Verdana, sans-serif;
+			color: #c3c3c3;
+			font-weight: bold;
+			border-width: 0px;
+		}
+
+		.mapboxgl-popup-close-button:hover {
+			color: #999;
+			background-color: white;
+			border-top-right-radius: 12px;
+		}
 	</style>
 
 </head>
@@ -74,18 +111,25 @@
 	<div id="map"></div>
 	<script>
 		mapboxgl.accessToken = 'pk.eyJ1IjoibmlubGluIiwiYSI6ImNqanR0Zzc4bzI5b2Ezd2xlb2ZmbzdrOHMifQ.nhMfjVcApf7oZVzhlMnRLA';
+
+		var bounds = [
+				[44.5701252638, 42.9501212402],
+				[44.7658192336, 43.111741861]
+		];
+
 		var map = new mapboxgl.Map({
 			container: 'map',
 			style: 'mapbox://styles/ninlin/ckl5cvgrr482x17rmyzky494g',
 			center: [44.67, 43.025],
-			zoom: 13
+			zoom: 13,
+			maxBounds: bounds
 		});
 
 
 		map.on('load', function() {
 			map.addSource('route', {
 				'type': 'geojson',
-				'data': 'https://raw.githubusercontent.com/Ninlin/irystory/main/streets_20210215.geojson'
+				'data': 'https://raw.githubusercontent.com/Ninlin/irystory/main/streets_20210216.geojson'
 			});
 			map.addLayer({
 				'id': 'route',
@@ -108,11 +152,12 @@
 						'russian',
 						'#5F239A',
 						'air',
-						'#1B98E4',
+						'#98ded9',
 						/* other */
 						'#ccc'
 					],
-					'line-width': 4
+					'line-width': 2.5,
+					'line-opacity': 0.8
 				}
 			});
 			map.addLayer({
@@ -125,7 +170,7 @@
 				},
 				'paint': {
 					'line-gap-width': 20,
-					'line-width': 10,
+					'line-width': 1,
 					'line-color': 'white',
 					'line-opacity': 0
 				}
@@ -134,7 +179,7 @@
 
 
 			var popup = new mapboxgl.Popup({
-				closeButton: false,
+				closeButton: true,
 				closeOnClick: false
 			});
 
@@ -163,16 +208,16 @@
 				} else if (birth == "null") {
 					popup
 						.setLngLat(e.lngLat)
-						.setHTML("<h3>" + name + "</h3>"+
-						"<hr>" +
-						"<h4>" + full_name + '</h4>' +
-					'<p>' + occupation + '</p>')
+						.setHTML("<h3>" + name + "</h3>" +
+							"<hr>" +
+							"<h4>" + full_name + '</h4>' +
+							'<p>' + occupation + '</p>')
 						.addTo(map);
 				} else {
 					popup
 						.setLngLat(e.lngLat)
 						.setHTML("<h3>" + name + "</h3>" +
-						"<hr>" +
+							"<hr>" +
 							"<h4>" + full_name + '</h4>' +
 							'<h5>' + birth + '-' + death + '</h5>' +
 							'<p>' + occupation + '</p>')
