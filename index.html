@@ -182,8 +182,8 @@
 				closeOnClick: false
 			});
 
-			map.on('mouseenter', 'outline', function(e) {
-				map.getCanvas().style.cursor = 'pointer';
+			map.on('click', 'outline', function(e) {
+				//map.getCanvas().style.cursor = 'pointer';
 
 				var coordinates = e.features[0].geometry.coordinates.slice();
 				var name = e.features[0].properties.name;
@@ -226,10 +226,17 @@
 
 
 			});
+			
+			map.on('mouseenter', 'outline', function () {
+				map.getCanvas().style.cursor = 'pointer';
+			});
+			
 			map.on('mouseleave', 'outline', function() {
 				map.getCanvas().style.cursor = '';
 				popup.remove();
 			});
+			
+			
 		});
 	</script>
 
